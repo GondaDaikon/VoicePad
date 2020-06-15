@@ -1,0 +1,36 @@
+div{
+  position: relative;
+}
+
+canvas{
+  position: absolute;
+}
+
+#canvas2 {
+  pointer-events: none;
+}
+
+#timestamp {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  text-align: right;
+  font-size: 10px;
+  color: #ccc;
+}
+
+#forms {
+  position: relative;
+  bottom: 0em;
+
+  text-align: center;
+  visibility:hidden;
+}
+
+#init {
+	position: absolute;
+	top: 200px;
+	font-size: 25px;
+	width: 100%;
+	text-align: center;
+}
