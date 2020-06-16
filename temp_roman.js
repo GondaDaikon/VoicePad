@@ -131,8 +131,8 @@ var freq2Trail = (function(){
     var tmpX,tmpY;
     while( pnt <= max){
       if(!(f1[pnt] == 0 || f2[pnt] == 0) ){
-        tmpX = f1[pnt] / 1000 * 300;
-        tmpY = 300 - f2[pnt] / 3000 * 300;
+        tmpX = Math.round(f1[pnt] / 1000 * 300);
+        tmpY = Math.round(300 - f2[pnt] / 3000 * 300);
         vec.push([tmpX, tmpY]);
       }else{
         vec.push([]);

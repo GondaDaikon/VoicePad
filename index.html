@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <title>Voice Pad</title>
   <script src="data.js"></script>
-  <script src="trajectory.js"></script>
+  <script src="manage-notes.js"></script>
+  <script src="make-notes.js"></script>
   <script src="temp_roman.js"></script>
   <script src="voicebutton.js"></script>
   <script src="voice.js"></script>
@@ -16,14 +17,18 @@
 <body>
   <div>
     <div id="timestamp"></div>
-    <canvas id="canvas3" width="1200" height="1000"></canvas>
-    <canvas id="canvas2" width="1200" height="1000"></canvas>
     <canvas id="canvas1" width="1200" height="1000"></canvas>
-    <form id="forms">
-      <label>Sentence<br>
-        <input id= "sentence" type="text" maxlength="100" required placeholder="こんにちは">
-      </label>
-        <button type="submit" id="submit-senetence">表示</button>
+    <canvas id="canvas2" width="1200" height="1000"></canvas>
+    <canvas id="canvas3" width="1200" height="1000"></canvas>
+    <form method="post" action="example.cgi" id ="forms">
+    <p>
+      <select name="Sentence" id="sentence">
+        <option value="konnichiwa">こんにちは</option>
+        <option value="ohayoo">おはよう</option>
+      </select>
+      <button type="submit" id="submit-senetence">表示</button>
+    </p>
+        
     </form>
   </div>
   <div id="init">Touch to start</div>
