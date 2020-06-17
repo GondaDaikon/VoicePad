@@ -445,7 +445,7 @@ var data_sumimasen_f2 = [
 ];
 //data_hoge =[[posX,posY,time(ms),isSetNotes],...]
 //posX,posY    : ノーツ位置（px）
-//time(ms) > 0 : 表示タイミング（undefindの場合次のノーツ間ラインを引かない）
+//time(ms) > 0 : 理想的なTapタイミング（undefindの場合次のノーツ間ラインを引かない）
 //isSetNotes   : ノーツを生成するか（false時ノーツを生成せずノーツ間ラインは引かれる）
 var data_konnichiwa = [
     [110,   230 , 0    ,true ],
