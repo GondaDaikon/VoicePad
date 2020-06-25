@@ -217,13 +217,13 @@ function loop(timestamp) {
     window.requestAnimationFrame(loop);
     var progress = timestamp - this.lastRender;
 
-    update(progress);
+    update(timestamp,progress);
     draw();
 	
     lastRender = timestamp;
 }
 //変数更新
-function update(progress) {
+function update(timestamp,progress) {
     if (state.touchStatus.isTouch) {
         touchingTime += progress;
     }
@@ -236,7 +236,7 @@ function update(progress) {
         touchingTime = 0;
 	}
 	ManageNotes.setScale(scale);
-    ManageNotes.updateNotes(touchingTime,state)
+    ManageNotes.updateNotes(timestamp,state)
 }
 //描画
 function draw() {

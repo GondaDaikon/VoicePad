@@ -21,20 +21,6 @@ var ManageNotes =
         }
         this.makeLine(this.notesArray);
     },
-    updateNotes : function(progress,state)
-    {
-        for(let i = 0; i < this.notesArray.length; i++){
-            this.notesArray[i].update(progress);
-            this.notesArray[i].hitNotes(progress,state);
-        }
-        this.updateLine(this.lineArray);
-    },
-    drawNotes : function(ctx,notesArray,Alpha)
-    {
-        for(let i = 0; i < notesArray.length; i++){
-            notesArray[i].draw(ctx,Alpha);
-        }
-    },
     makeLine : function(notesArray)
     {
         let tmpArray = [];
@@ -53,6 +39,23 @@ var ManageNotes =
             }
         }
     },
+    updateNotes : function(progress,state)
+    {
+        for(let i = 0; i < this.notesArray.length; i++){
+            this.notesArray[i].update(progress);
+            this.notesArray[i].hitNotes(progress,state);
+        }
+        for(let i = 0; i < this.notesArray.length; i++){
+            if(this.notesArray[i].isVisible && !this.notesArray[i].isDone){
+                this.notesArray[i].isNext = true;
+                break;
+            }
+        }
+        if(this.notesArray[this.notesArray.length-1].isDone){
+            
+        }
+        this.updateLine(this.lineArray);
+    },
     updateLine : function(lineArray)
     {
         for(let i = 0; i < lineArray.length; i++){
@@ -62,6 +65,16 @@ var ManageNotes =
             }else{
                 this.isLineDraw[i] = false;
             }
+        }
+    },
+    calcuScore : function(notesArray)
+    {
+        
+    },
+    drawNotes : function(ctx,notesArray,Alpha)
+    {
+        for(let i = 0; i < notesArray.length; i++){
+            notesArray[i].draw(ctx,Alpha);
         }
     },
     drawLine : function(ctx)
@@ -90,6 +103,8 @@ var ManageNotes =
                         ctx.font=( 28*this.scale + "px Arial");
                         ctx.textAlign = "center";
                         ctx.fillText(textCount, x, y + lineWidth*0.22);
+                    }
+                    if(this.lineArray[i][j].isVisible){
                         textCount ++;
                     }
                     if(j == indexEnd){
