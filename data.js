@@ -448,15 +448,15 @@ var data_sumimasen_f2 = [
 //time(ms) > 0 : 理想的なTapタイミング（undefindの場合次のノーツ間ラインを引かない）
 //isSetNotes   : ノーツを生成するか（false時ノーツを生成せずノーツ間ラインは引かれる）
 var data_konnichiwa = [
-    [110,   230 , 0    ,true ],
-    [160,   215 , 0    ,true ],
-    [90 ,   170 , 0    ,true ],
-    [95 ,   75  , 0    ,true ],
+    [110,   230 , 130  ,true ],
+    [160,   215 , 190  ,true ],
+    [90 ,   170 , 290  ,true ],
+    [95 ,   75  , 390  ,true ],
     [0,     0,undefined,false],
-    [60 ,   100 , 0    ,true ],
-    [95 ,   75  , 0    ,true ],
-    [135,   155 , 0    ,true  ],
-    [230,   175 , 0    ,true ],
+    [60 ,   100 , 440  ,true ],
+    [95 ,   75  , 560  ,true ],
+    [135,   155 , 620  ,true ],
+    [230,   175 , 770  ,true ],
 ];
 var data_ohayoo = [
     [150, 240, 0    , true ],

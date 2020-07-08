@@ -7,6 +7,7 @@ var ManageNotes =
     notesArray : [],
     lineArray : [],
     isLineDraw : [],
+    isSeted : false,
     scale : 2.0,
     gridx : 400,
     gridy : 80,
@@ -14,6 +15,7 @@ var ManageNotes =
     ReadNotes : function(data)
     {
         console.log(data);
+        this.isSeted = true;
         this.notesArray = [];
         this.lineArray = [];
         for(let i = 0; i < data.length; i++){
@@ -51,9 +53,11 @@ var ManageNotes =
                 break;
             }
         }
-        if(this.notesArray[this.notesArray.length-1].isDone){
-            
-        }
+        try{
+            if(this.notesArray[this.notesArray.length-1].isDone){
+                this.calcuScore(this.notesArray);
+            }
+        } catch(e){}
         this.updateLine(this.lineArray);
     },
     updateLine : function(lineArray)
@@ -69,7 +73,53 @@ var ManageNotes =
     },
     calcuScore : function(notesArray)
     {
-        
+        let tmpArray = []
+        for(let i = 0; i < notesArray.length; i++){
+            if(notesArray[i].isVisible){
+                tmpArray.push(notesArray[i]);
+            }
+        }
+        let rightTaps = [];
+        let actualTaps = [];
+        for(let i = 0; i < tmpArray.length; i++){
+            rightTaps.push(tmpArray[i].rightTapTime);
+            actualTaps.push(tmpArray[i].tapTime);
+        }
+        let rightTapsRatio = this.ratio(rightTaps);
+        let actualTapsRatio = this.ratio(actualTaps);
+        let cosSim = this.cosSimilarity(rightTapsRatio,actualTapsRatio);
+        console.log(cosSim);
+    },
+    ratio : function(Array){
+        let ratioArray = [];
+        let end = Array.length-1;
+        let denominator = Array[end] - Array[0]
+        for(let i=0; i < end; i++){
+            let Numerator = Array[i+1] - Array[i]
+            ratioArray.push(Numerator / denominator);
+        }
+        return ratioArray
+    },
+    cosSimilarity : function(x,y){
+        let innerXY = this.dot(x,y);
+        let crossXY = this.cross(x,y);
+
+        let cosSim = innerXY / crossXY;
+
+        return cosSim;
+    },
+    dot : function(x,y){
+        let innerXY = 0;
+        for(let i=0; i < x.length; i++){
+            innerXY += (x[i] * y[i]);
+        }
+        return innerXY
+    },
+    cross : function(x,y){
+        let crossXY = 0;
+        let sizeX = x.reduce(function(a, v){return a + v*v;},0);
+        let sizeY = y.reduce(function(a, v){return a + v*v;},0);
+        return crossXY = Math.sqrt(sizeX) * Math.sqrt(sizeY)
     },
     drawNotes : function(ctx,notesArray,Alpha)
     {
