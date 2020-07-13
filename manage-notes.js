@@ -9,6 +9,7 @@ var ManageNotes =
     isLineDraw : [],
     isOneTime : true,
     isSeted : false,
+    score : 0,
     scale : 2.0,
     gridx : 400,
     gridy : 80,
@@ -91,9 +92,8 @@ var ManageNotes =
         }
         let rightTapsRatio = this.ratio(rightTaps);
         let actualTapsRatio = this.ratio(actualTaps);
-        console.log(rightTapsRatio,actualTapsRatio);
         let euclidDist = this.euclideanDistance(rightTapsRatio,actualTapsRatio);
-        console.log(euclidDist);
+        this.score = Math.ceil((1 - euclidDist)*100);
     },
     ratio : function(Array){
         let ratioArray = [];
@@ -187,6 +187,20 @@ var ManageNotes =
                 }
             }
         }
+    },
+    drawScore : function(ctx){
+        let ox = 400 * this.scale;
+        let oy = 80 * this.scale;
+
+        let ax = 10 * this.scale;
+        let ay = 10 * this.scale;
+
+        let dispText = "SCORE : " + this.score + " 点";
+        
+        ctx.fillStyle = "rgba(38,50,56 ,1)";
+        ctx.font=( 18*this.scale + "px Arial");
+        ctx.textAlign = "left";
+        ctx.fillText(dispText, ox+ax, oy-ay);
     },
     setScale : function(scale){
         this.scale = scale;
