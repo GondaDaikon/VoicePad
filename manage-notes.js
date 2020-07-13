@@ -7,6 +7,7 @@ var ManageNotes =
     notesArray : [],
     lineArray : [],
     isLineDraw : [],
+    isOneTime : true,
     isSeted : false,
     scale : 2.0,
     gridx : 400,
@@ -27,6 +28,7 @@ var ManageNotes =
     {
         let tmpArray = [];
         let Array_end = notesArray.length - 1;
+        this.isOneTime = true;
         for(let i = 0; i < notesArray.length; i++){
             if(notesArray[i].rightTapTime == null){
                 this.lineArray.push(tmpArray)
@@ -54,8 +56,10 @@ var ManageNotes =
             }
         }
         try{
-            if(this.notesArray[this.notesArray.length-1].isDone){
+            //Notes End Taped
+            if(this.notesArray[this.notesArray.length-1].isDone && this.isOneTime){
                 this.calcuScore(this.notesArray);
+                this.isOneTime = false;
             }
         } catch(e){}
         this.updateLine(this.lineArray);
@@ -87,8 +91,9 @@ var ManageNotes =
         }
         let rightTapsRatio = this.ratio(rightTaps);
         let actualTapsRatio = this.ratio(actualTaps);
-        let cosSim = this.cosSimilarity(rightTapsRatio,actualTapsRatio);
-        console.log(cosSim);
+        console.log(rightTapsRatio,actualTapsRatio);
+        let euclidDist = this.euclideanDistance(rightTapsRatio,actualTapsRatio);
+        console.log(euclidDist);
     },
     ratio : function(Array){
         let ratioArray = [];
@@ -99,6 +104,16 @@ var ManageNotes =
             ratioArray.push(Numerator / denominator);
         }
         return ratioArray
+    },
+    euclideanDistance : function(x,y){
+        let euclid = 0;
+        let sizeAB = 0
+        for(let i=0; i < x.length; i++){
+            let subAB = x[i] - y[i];
+            sizeAB += subAB**2;
+        }
+        euclid = Math.sqrt(sizeAB);
+        return  euclid;
     },
     cosSimilarity : function(x,y){
         let innerXY = this.dot(x,y);
