@@ -4,8 +4,10 @@
 
 var ManageNotes = 
 {
+    loaddata : [],
     notesArray : [],
     // notes socket[[x,y,Judge]...]
+    socket : [],
     lineArray : [],
     isLineDraw : [],
     isOneTime : true,
@@ -18,6 +20,7 @@ var ManageNotes =
     ReadNotes : function(data)
     {
         console.log(data);
+        this.loaddata = data;
         this.isSeted = true;
         this.notesArray = [];
         this.lineArray = [];
@@ -45,6 +48,17 @@ var ManageNotes =
             }
         }
     },
+    makeSocket : function(Array)
+    {
+        for(let i = 0; i < Array.length-1; i++){
+            let socket_x,socket_y;
+
+            socket_x = (Array[i].x + Array[i+1].x)/2;
+            socket_y = (Array[i].y + Array[i+1].y)/2;
+
+            this.socket.push([socket_x,socket_y,undefined]);
+        }
+    },
     updateNotes : function(progress,state)
     {
         for(let i = 0; i < this.notesArray.length; i++){
@@ -58,10 +72,11 @@ var ManageNotes =
             }
         }
         try{
-            //Notes End Taped
+            //Notes End Taped+
             if(this.notesArray[this.notesArray.length-1].isDone && this.isOneTime){
                 this.calcuScore(this.notesArray);
-                this.isOneTime = false;
+                this.ReadNotes(this.loaddata);
+                //this.isOneTime = false;
             }
         } catch(e){}
         this.updateLine(this.lineArray);

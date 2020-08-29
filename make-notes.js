@@ -61,10 +61,11 @@ function makeNotes(x, y, rightTapTime, isVisible)
     }
     notes.reSet = function()
     {
-        this.only1time = true;
-        this.isNext = false;
-        this.isDraw = false;
+        this.isSet= true;
         this.isDone = false;
+        this.isNext = false;
+        this.only1time = true;
+        this.isDraw = false;
     }
     notes.setScale = function(scale)
     {
