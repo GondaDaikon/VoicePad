@@ -5,6 +5,7 @@
 var ManageNotes = 
 {
     notesArray : [],
+    // notes socket[[x,y,Judge]...]
     lineArray : [],
     isLineDraw : [],
     isOneTime : true,
@@ -110,6 +111,7 @@ var ManageNotes =
         let sizeAB = 0
         for(let i=0; i < x.length; i++){
             let subAB = x[i] - y[i];
+            //insert socket[n][2] = Judge
             sizeAB += subAB**2;
         }
         euclid = Math.sqrt(sizeAB);
@@ -202,6 +204,7 @@ var ManageNotes =
         ctx.textAlign = "left";
         ctx.fillText(dispText, ox+ax, oy-ay);
     },
+    //drawJudge() if socket != undefind 
     setScale : function(scale){
         this.scale = scale;
         this.gridx = 400 * scale;
