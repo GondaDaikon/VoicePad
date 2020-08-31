@@ -10,7 +10,8 @@ var ManageNotes =
     socket : [],
     lineArray : [],
     isLineDraw : [],
-    isOneTime : true,
+    isEndnotes : true,
+    isFirstnotes : true,
     isSeted : false,
     score : 0,
     scale : 2.0,
@@ -33,7 +34,8 @@ var ManageNotes =
     {
         let tmpArray = [];
         let Array_end = notesArray.length - 1;
-        this.isOneTime = true;
+        this.isEndnotes = true;
+        this.isFirstnotes = true;
         for(let i = 0; i < notesArray.length; i++){
             if(notesArray[i].rightTapTime == null){
                 this.lineArray.push(tmpArray)
@@ -50,11 +52,20 @@ var ManageNotes =
     },
     makeSocket : function(Array)
     {
-        for(let i = 0; i < Array.length-1; i++){
-            let socket_x,socket_y;
+        let tempArray = [];
+        for(let i = 0; i < Array.length; i++){
+            if (Array[i].isVisible){
+                tempArray.push(Array[i])
+            }
+        }
+        for(let i = 0; i < tempArray.length-1; i++){
+            let socket_x,socket_y,diff_x,diff_y;
 
-            socket_x = (Array[i].x + Array[i+1].x)/2;
-            socket_y = (Array[i].y + Array[i+1].y)/2;
+            diff_x = (Math.max(tempArray[i].x,tempArray[i+1].x)-Math.min(tempArray[i].x,tempArray[i+1].x))/2;
+            diff_y = (Math.max(tempArray[i].y,tempArray[i+1].y)-Math.min(tempArray[i].y,tempArray[i+1].y))/2;
+
+            socket_x = Math.min(tempArray[i].x,tempArray[i+1].x) + diff_x;
+            socket_y = Math.min(tempArray[i].y,tempArray[i+1].y) + diff_y;
 
             this.socket.push([socket_x,socket_y,undefined]);
         }
@@ -72,11 +83,19 @@ var ManageNotes =
             }
         }
         try{
+            //Notes First Taped+
+            if(this.notesArray[0].isDone && this.isFirstnotes){
+                console.log("FirstNotesTaped")
+                this.isFirstnotes = false;
+                this.socket = [];
+                this.makeSocket(this.notesArray);
+            }
             //Notes End Taped+
-            if(this.notesArray[this.notesArray.length-1].isDone && this.isOneTime){
+            if(this.notesArray[this.notesArray.length-1].isDone && this.isEndnotes){
+                console.log("EndNotesTaped")
+                this.isEndnotes = false;
                 this.calcuScore(this.notesArray);
                 this.ReadNotes(this.loaddata);
-                //this.isOneTime = false;
             }
         } catch(e){}
         this.updateLine(this.lineArray);
@@ -109,7 +128,18 @@ var ManageNotes =
         let rightTapsRatio = this.ratio(rightTaps);
         let actualTapsRatio = this.ratio(actualTaps);
         let euclidDist = this.euclideanDistance(rightTapsRatio,actualTapsRatio);
+        this.insertJudge(rightTapsRatio,actualTapsRatio);
         this.score = Math.ceil((1 - euclidDist)*100);
+    },
+    //insert socket[n][2] = Judge
+    insertJudge : function(x,y)
+    {
+        for(let i=0; i < x.length; i++){
+            let subAB = x[i] - y[i];
+            let sizeAB = subAB**2;
+            judge_ori = Math.sqrt(sizeAB);
+            this.socket[i][2] = judge_ori;
+        }
     },
     ratio : function(Array){
         let ratioArray = [];
@@ -126,7 +156,6 @@ var ManageNotes =
         let sizeAB = 0
         for(let i=0; i < x.length; i++){
             let subAB = x[i] - y[i];
-            //insert socket[n][2] = Judge
             sizeAB += subAB**2;
         }
         euclid = Math.sqrt(sizeAB);
@@ -219,7 +248,37 @@ var ManageNotes =
         ctx.textAlign = "left";
         ctx.fillText(dispText, ox+ax, oy-ay);
     },
-    //drawJudge() if socket != undefind 
+    //drawJudge() if socket != undefind
+    //socket[[x,y,Judge]...]
+    drawJudge : function(ctx){
+        try{
+            if(this.socket[0][2] != undefined){
+                for(let i=0; i < this.socket.length; i++)
+                {
+                    //console.log("Judge");
+                    let ox = (this.socket[i][0] * this.scale) + this.gridx;
+                    let oy = (this.socket[i][1] * this.scale) + this.gridy;
+
+                    let ax = 4 * this.scale;
+                    let ay = 4 * this.scale;
+
+                    let dispText;
+                    if(this.socket[i][2] < 0.1){
+                        dispText = "PERFECT";
+                    }else if(this.socket[i][3] < 0.5){
+                        dispText = " GOOD ";
+                    }else{
+                        dispText = "  BAD  ";
+                    }
+
+                    ctx.fillStyle = "rgba(38,50,56 ,1)";
+                    ctx.font=( 18*this.scale + "px Arial");
+                    ctx.textAlign = "center";
+                    ctx.fillText(dispText, ox+ax, oy+ay);
+                }
+            }
+        }catch(e){}
+    },
     setScale : function(scale){
         this.scale = scale;
         this.gridx = 400 * scale;

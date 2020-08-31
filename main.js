@@ -247,7 +247,9 @@ function draw() {
 	}
 	ManageNotes.drawScore(tractCtx);
 	// if isTouch drawJudge()
-
+	if(!state.touchStatus.isTouch){
+		ManageNotes.drawJudge(tractCtx);
+	}
 	//マウス軌道
 	// console.log("X: " + state.x + "  Y: " + state.y);
 	if(state.touchStatus.isTouch){
