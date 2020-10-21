@@ -8,6 +8,7 @@ var ManageNotes =
     notesArray : [],
     // notes socket[[x,y,Judge]...]
     socket : [],
+    now_point:[],
     lineArray : [],
     isLineDraw : [],
     isEndnotes : true,
@@ -188,6 +189,12 @@ var ManageNotes =
             notesArray[i].draw(ctx,Alpha);
         }
     },
+
+    drawVec : function(ctx,Array)
+    {
+        let alpha;
+    },
+    
     drawLine : function(ctx)
     {
         let alpha =  0.9;
