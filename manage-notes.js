@@ -192,55 +192,69 @@ var ManageNotes =
 
     drawVec : function(ctx,Array)
     {
-        let alpha;
-    },
-    
-    drawLine : function(ctx)
-    {
-        let alpha =  0.9;
-        let isFirst = true;
-        let lineWidth = this.lineArray[0][0].Notes_radius*2*scale;
-        let textCount = 1;
-        for(let i=0; i < this.lineArray.length; i++){
-            // console.log("drawNotes");
-            this.drawNotes(ctx,this.lineArray[i],alpha);
-            ctx.beginPath();
-            let x = (this.lineArray[i][0].x * this.scale) + this.gridx;
-            let y = (this.lineArray[i][0].y * this.scale) + this.gridy;
-            ctx.moveTo(x, y);
-            for(let j=0; j < this.lineArray[i].length; j++)
-            {
-                let indexEnd = this.lineArray[i].length -1;
-                if(this.isLineDraw[i]){
-                    x = (this.lineArray[i][j].x * this.scale) + this.gridx;
-                    y = (this.lineArray[i][j].y * this.scale) + this.gridy;
-                    ctx.lineTo(x,y);
-
-                    if(isFirst && this.lineArray[i][j].isVisible&&this.lineArray[i][j].isSet){
-                        ctx.fillStyle = "rgba(245,245,245 ,1)";
-                        ctx.font=( 28*this.scale + "px Arial");
-                        ctx.textAlign = "center";
-                        ctx.fillText(textCount, x, y + lineWidth*0.22);
-                    }
-                    if(this.lineArray[i][j].isVisible){
-                        textCount ++;
-                    }
-                    if(j == indexEnd){
-                        ctx.globalCompositeOperation = "destination-over";
-                        ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
-                        ctx.lineCap = "round";
-                        ctx.lineJoin = "round";
-                        ctx.lineWidth = lineWidth;
-                        ctx.stroke();
-                        ctx.globalCompositeOperation = "source-over";
-                        isFirst = false;
-                        alpha -= 0.4;
-                        if(alpha < 0) alpha = 0;
-                    }
-                }
+        let alpha=0;
+        for(let i=0; i<Array.length; i++)
+        {
+            if(Array[i]==this.now_point[0]){
+                alpha = 0.9;
+            }else if(Array[i]>this.now_point[0]){
+                alpha = 0.4;
+            }else if(Array[i]<this.now_point[0]){
+                alpha = 0;
             }
+            this.drawLine(ctx,Array[i],alpha)
         }
     },
+    drawLine : function(ctx,Array,alpha)
+    {
+        
+    },
+    // drawLine : function(ctx)
+    // {
+    //     let alpha =  0.9;
+    //     let isFirst = true;
+    //     let lineWidth = this.lineArray[0][0].Notes_radius*2*scale;
+    //     let textCount = 1;
+    //     for(let i=0; i < this.lineArray.length; i++){
+    //         // console.log("drawNotes");
+    //         this.drawNotes(ctx,this.lineArray[i],alpha);
+    //         ctx.beginPath();
+    //         let x = (this.lineArray[i][0].x * this.scale) + this.gridx;
+    //         let y = (this.lineArray[i][0].y * this.scale) + this.gridy;
+    //         ctx.moveTo(x, y);
+    //         for(let j=0; j < this.lineArray[i].length; j++)
+    //         {
+    //             let indexEnd = this.lineArray[i].length -1;
+    //             if(this.isLineDraw[i]){
+    //                 x = (this.lineArray[i][j].x * this.scale) + this.gridx;
+    //                 y = (this.lineArray[i][j].y * this.scale) + this.gridy;
+    //                 ctx.lineTo(x,y);
+
+    //                 if(isFirst && this.lineArray[i][j].isVisible&&this.lineArray[i][j].isSet){
+    //                     ctx.fillStyle = "rgba(245,245,245 ,1)";
+    //                     ctx.font=( 28*this.scale + "px Arial");
+    //                     ctx.textAlign = "center";
+    //                     ctx.fillText(textCount, x, y + lineWidth*0.22);
+    //                 }
+    //                 if(this.lineArray[i][j].isVisible){
+    //                     textCount ++;
+    //                 }
+    //                 if(j == indexEnd){
+    //                     ctx.globalCompositeOperation = "destination-over";
+    //                     ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
+    //                     ctx.lineCap = "round";
+    //                     ctx.lineJoin = "round";
+    //                     ctx.lineWidth = lineWidth;
+    //                     ctx.stroke();
+    //                     ctx.globalCompositeOperation = "source-over";
+    //                     isFirst = false;
+    //                     alpha -= 0.4;
+    //                     if(alpha < 0) alpha = 0;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // },
     drawScore : function(ctx){
         let ox = 400 * this.scale;
         let oy = 80 * this.scale;
