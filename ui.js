@@ -49,7 +49,7 @@ class UI {
 		this.conso[ch].voice.hold    = data.sustainTime / 1000.0;
 		this.conso[ch].voice.release = data.release / 1000.0;
 		this.conso[ch].voice.vowel_delay = data.vdelay / 1000.0;
-	    this.conso[ch].voice.boost.gain.value = data.boost;
+		this.conso[ch].voice.boost.gain.value = data.boost;
 		if (this.conso[ch].voice.consoFilter != null) {
 			this.conso[ch].voice.consoFilter.frequency.type = data.filter_type;
 			this.conso[ch].voice.consoFilter.frequency.value = data.filter_freq;

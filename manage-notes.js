@@ -6,13 +6,11 @@ var ManageNotes =
 {
     loaddata : [],
     notesArray : [],
-    // notes socket[[x,y,Judge]...]
-    socket : [],
-    now_point:[],
+    now_line: 0,
     lineArray : [],
     isLineDraw : [],
-    isEndnotes : true,
-    isFirstnotes : true,
+    TappedEndNotes : true,
+    TappedFirstNotes : true,
     isSeted : false,
     score : 0,
     scale : 2.0,
@@ -23,11 +21,10 @@ var ManageNotes =
     {
         console.log(data);
         this.loaddata = data;
-        this.isSeted = true;
         this.notesArray = [];
         this.lineArray = [];
         for(let i = 0; i < data.length; i++){
-            this.notesArray.push(makeNotes(data[i][0],data[i][1],data[i][2],data[i][3]));
+            this.notesArray.push(makeNotes(data[i][0], data[i][1], data[i][2]));
         }
         this.makeLine(this.notesArray);
     },
@@ -35,10 +32,10 @@ var ManageNotes =
     {
         let tmpArray = [];
         let Array_end = notesArray.length - 1;
-        this.isEndnotes = true;
-        this.isFirstnotes = true;
+        this.TappedEndNotes = true;
+        this.TappedFirstNotes = true;
         for(let i = 0; i < notesArray.length; i++){
-            if(notesArray[i].rightTapTime == null){
+            if(!notesArray[i].x){
                 this.lineArray.push(tmpArray)
                 tmpArray = [];
                 i++;
@@ -50,52 +47,37 @@ var ManageNotes =
                 i++;
             }
         }
-    },
-    makeSocket : function(Array)
-    {
-        let tempArray = [];
-        for(let i = 0; i < Array.length; i++){
-            if (Array[i].isVisible){
-                tempArray.push(Array[i])
-            }
-        }
-        for(let i = 0; i < tempArray.length-1; i++){
-            let socket_x,socket_y,diff_x,diff_y;
-
-            diff_x = (Math.max(tempArray[i].x,tempArray[i+1].x)-Math.min(tempArray[i].x,tempArray[i+1].x))/2;
-            diff_y = (Math.max(tempArray[i].y,tempArray[i+1].y)-Math.min(tempArray[i].y,tempArray[i+1].y))/2;
-
-            socket_x = Math.min(tempArray[i].x,tempArray[i+1].x) + diff_x;
-            socket_y = Math.min(tempArray[i].y,tempArray[i+1].y) + diff_y;
-
-            this.socket.push([socket_x,socket_y,undefined]);
-        }
+        console.log(this.lineArray);
     },
     updateNotes : function(progress,state)
     {
         for(let i = 0; i < this.notesArray.length; i++){
-            this.notesArray[i].update(progress);
             this.notesArray[i].hitNotes(progress,state);
         }
         for(let i = 0; i < this.notesArray.length; i++){
-            if(this.notesArray[i].isVisible && !this.notesArray[i].isDone){
+            if(!this.notesArray[i].isDone){
                 this.notesArray[i].isNext = true;
                 break;
             }
         }
         try{
-            //Notes First Taped+
-            if(this.notesArray[0].isDone && this.isFirstnotes){
-                console.log("FirstNotesTaped")
-                this.isFirstnotes = false;
-                this.socket = [];
-                this.makeSocket(this.notesArray);
+            //Notes First Tapped+
+            if(this.notesArray[0].isDone && this.TappedFirstNotes){
+                console.log("FirstNotesTapped")
+                this.TappedFirstNotes = false;
             }
-            //Notes End Taped+
-            if(this.notesArray[this.notesArray.length-1].isDone && this.isEndnotes){
-                console.log("EndNotesTaped")
-                this.isEndnotes = false;
-                this.calcuScore(this.notesArray);
+            //Notes End Tapped+
+            if(this.notesArray[this.notesArray.length-1].isDone && this.TappedEndNotes){
+                console.log("EndNotesTapped")
+                this.TappedEndNotes = false;
+                let count=1
+                let first_tapTime = this.notesArray[0].tapTime;
+                this.notesArray.forEach((element) => {
+                    let time = element.tapTime - first_tapTime
+                    console.log(count +" : "+time*0.001);
+                    // first_tapTime += time;
+                    count++;
+                })
                 this.ReadNotes(this.loaddata);
             }
         } catch(e){}
@@ -103,202 +85,123 @@ var ManageNotes =
     },
     updateLine : function(lineArray)
     {
+        this.now_line = 0;
         for(let i = 0; i < lineArray.length; i++){
-            let endNotes = lineArray[i].length - 1;
-            if(lineArray[i][endNotes].isSet){
-                this.isLineDraw[i] = true;
-            }else{
-                this.isLineDraw[i] = false;
-            }
-        }
-    },
-    calcuScore : function(notesArray)
-    {
-        let tmpArray = []
-        for(let i = 0; i < notesArray.length; i++){
-            if(notesArray[i].isVisible){
-                tmpArray.push(notesArray[i]);
-            }
-        }
-        let rightTaps = [];
-        let actualTaps = [];
-        for(let i = 0; i < tmpArray.length; i++){
-            rightTaps.push(tmpArray[i].rightTapTime);
-            actualTaps.push(tmpArray[i].tapTime);
-        }
-        let rightTapsRatio = this.ratio(rightTaps);
-        let actualTapsRatio = this.ratio(actualTaps);
-        let euclidDist = this.euclideanDistance(rightTapsRatio,actualTapsRatio);
-        this.insertJudge(rightTapsRatio,actualTapsRatio);
-        this.score = Math.ceil((1 - euclidDist)*100);
-    },
-    //insert socket[n][2] = Judge
-    insertJudge : function(x,y)
-    {
-        for(let i=0; i < x.length; i++){
-            let subAB = x[i] - y[i];
-            let sizeAB = subAB**2;
-            judge_ori = Math.sqrt(sizeAB);
-            this.socket[i][2] = judge_ori;
-        }
-    },
-    ratio : function(Array){
-        let ratioArray = [];
-        let end = Array.length-1;
-        let denominator = Array[end] - Array[0]
-        for(let i=0; i < end; i++){
-            let Numerator = Array[i+1] - Array[i]
-            ratioArray.push(Numerator / denominator);
-        }
-        return ratioArray
-    },
-    euclideanDistance : function(x,y){
-        let euclid = 0;
-        let sizeAB = 0
-        for(let i=0; i < x.length; i++){
-            let subAB = x[i] - y[i];
-            sizeAB += subAB**2;
-        }
-        euclid = Math.sqrt(sizeAB);
-        return  euclid;
-    },
-    cosSimilarity : function(x,y){
-        let innerXY = this.dot(x,y);
-        let crossXY = this.cross(x,y);
+            let end = lineArray[i].length - 1;
 
-        let cosSim = innerXY / crossXY;
-
-        return cosSim;
-    },
-    dot : function(x,y){
-        let innerXY = 0;
-        for(let i=0; i < x.length; i++){
-            innerXY += (x[i] * y[i]);
-        }
-        return innerXY
-    },
-    cross : function(x,y){
-        let crossXY = 0;
-        let sizeX = x.reduce(function(a, v){return a + v*v;},0);
-        let sizeY = y.reduce(function(a, v){return a + v*v;},0);
-        return crossXY = Math.sqrt(sizeX) * Math.sqrt(sizeY)
-    },
-    drawNotes : function(ctx,notesArray,Alpha)
-    {
-        for(let i = 0; i < notesArray.length; i++){
-            notesArray[i].draw(ctx,Alpha);
+            this.now_line = lineArray[i][end].isDone ? this.now_line+1 : this.now_line;
         }
     },
-
-    drawVec : function(ctx,Array)
+    drawVec : function(ctx)
     {
-        let alpha=0;
-        for(let i=0; i<Array.length; i++)
+        for(let i=0; i< this.lineArray.length; i++)
         {
-            if(Array[i]==this.now_point[0]){
+            let alpha;
+            // 現在のライン
+            if( i == this.now_line){
                 alpha = 0.9;
-            }else if(Array[i]>this.now_point[0]){
+            }
+            // 次以降のライン
+            if( i > this.now_line){
                 alpha = 0.4;
-            }else if(Array[i]<this.now_point[0]){
+            }
+            if( i > this.now_line + 1){
+                alpha = 0.2;
+            }
+            if( i > this.now_line + 2){
+                alpha = 0.1;
+            }
+            // なぞり終えたライン
+            if( i < this.now_line){
                 alpha = 0;
             }
-            this.drawLine(ctx,Array[i],alpha)
+            // console.log("alpha : " + alpha)
+            // console.log("now_line : " + this.lineArray[i])
+            this.drawLine(ctx, this.lineArray[i],alpha)
         }
     },
     drawLine : function(ctx,Array,alpha)
     {
+        let lineWidth = 10 * this.scale;
+
+        let ps = [];
+        Array.forEach((element) => {
+            let tmp = {};
+            tmp.x = (element.x * this.scale) + this.gridx
+            tmp.y = (element.y * this.scale) + this.gridy
+            ps.push(tmp)
+            // element.draw(ctx,alpha)
+        })
+        // console.log(ps)
+        let pointer = new Spline (ps)
+
+        ctx.beginPath();
+        for (let i = 0; i <= 1; i += .01) {
+            let Pos = pointer.calc (i);
+            ctx[i ? 'lineTo': 'moveTo'](Pos.x, Pos.y);
+        }
         
+        ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+        this.drawArrow(ctx, pointer,alpha);
     },
-    // drawLine : function(ctx)
-    // {
-    //     let alpha =  0.9;
-    //     let isFirst = true;
-    //     let lineWidth = this.lineArray[0][0].Notes_radius*2*scale;
-    //     let textCount = 1;
-    //     for(let i=0; i < this.lineArray.length; i++){
-    //         // console.log("drawNotes");
-    //         this.drawNotes(ctx,this.lineArray[i],alpha);
-    //         ctx.beginPath();
-    //         let x = (this.lineArray[i][0].x * this.scale) + this.gridx;
-    //         let y = (this.lineArray[i][0].y * this.scale) + this.gridy;
-    //         ctx.moveTo(x, y);
-    //         for(let j=0; j < this.lineArray[i].length; j++)
-    //         {
-    //             let indexEnd = this.lineArray[i].length -1;
-    //             if(this.isLineDraw[i]){
-    //                 x = (this.lineArray[i][j].x * this.scale) + this.gridx;
-    //                 y = (this.lineArray[i][j].y * this.scale) + this.gridy;
-    //                 ctx.lineTo(x,y);
+    drawArrow : function(ctx,pointer,alpha){
+        let w = 10 * this.scale, h = 20 * this.scale,
+            A = pointer.calc (.9), B = pointer.calc (1),
+            {L,R} = this.arrowPos(A,B,w,h);
 
-    //                 if(isFirst && this.lineArray[i][j].isVisible&&this.lineArray[i][j].isSet){
-    //                     ctx.fillStyle = "rgba(245,245,245 ,1)";
-    //                     ctx.font=( 28*this.scale + "px Arial");
-    //                     ctx.textAlign = "center";
-    //                     ctx.fillText(textCount, x, y + lineWidth*0.22);
-    //                 }
-    //                 if(this.lineArray[i][j].isVisible){
-    //                     textCount ++;
-    //                 }
-    //                 if(j == indexEnd){
-    //                     ctx.globalCompositeOperation = "destination-over";
-    //                     ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
-    //                     ctx.lineCap = "round";
-    //                     ctx.lineJoin = "round";
-    //                     ctx.lineWidth = lineWidth;
-    //                     ctx.stroke();
-    //                     ctx.globalCompositeOperation = "source-over";
-    //                     isFirst = false;
-    //                     alpha -= 0.4;
-    //                     if(alpha < 0) alpha = 0;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // },
-    drawScore : function(ctx){
-        let ox = 400 * this.scale;
-        let oy = 80 * this.scale;
+        ctx.beginPath();
+        ctx.moveTo(L.x,L.y); //最初の点の場所
+		ctx.lineTo(R.x,R.y); //2番目の点の場所
+		ctx.lineTo(B.x,B.y); //3番目の点の場所
+		ctx.closePath();	//三角形の最後の線 closeさせる
 
-        let ax = 10 * this.scale;
-        let ay = 10 * this.scale;
-
-        let dispText = "SCORE : " + this.score + " 点";
-        
-        ctx.fillStyle = "rgba(38,50,56 ,1)";
-        ctx.font=( 18*this.scale + "px Arial");
-        ctx.textAlign = "left";
-        ctx.fillText(dispText, ox+ax, oy-ay);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = "rgba(41,182,246," + alpha + ")"; //枠線の色
+        ctx.fillStyle = "rgba(41,182,246," + alpha + ")"; //塗りつぶしの色
+		
+        // ctx.fill();
+        ctx.stroke();
+        // console.log("Arrow Draw!!")
     },
-    //drawJudge() if socket != undefind
-    //socket[[x,y,Judge]...]
-    drawJudge : function(ctx){
-        try{
-            if(this.socket[0][2] != undefined){
-                for(let i=0; i < this.socket.length; i++)
-                {
-                    //console.log("Judge");
-                    let ox = (this.socket[i][0] * this.scale) + this.gridx;
-                    let oy = (this.socket[i][1] * this.scale) + this.gridy;
+    arrowPos : function(A,B,w,h){
+        let Vx= B.x-A.x,
+            Vy= B.y-A.y,
+            v = Math.sqrt(Vx*Vx+Vy*Vy),
+            Ux= Vx/v,
+            Uy= Vy/v,
+            L = {},
+            R = {};
 
-                    let ax = 4 * this.scale;
-                    let ay = 4 * this.scale;
+        L.x= B.x - Uy*w - Ux*h;
+        L.y= B.y + Ux*w - Uy*h;
+        R.x= B.x + Uy*w - Ux*h;
+        R.y= B.y - Ux*w - Uy*h;
 
-                    let dispText;
-                    if(this.socket[i][2] < 0.1){
-                        dispText = "PERFECT";
-                    }else if(this.socket[i][3] < 0.5){
-                        dispText = " GOOD ";
-                    }else{
-                        dispText = "  BAD  ";
-                    }
+        return {L: L, R: R};
+    },
 
-                    ctx.fillStyle = "rgba(38,50,56 ,1)";
-                    ctx.font=( 18*this.scale + "px Arial");
-                    ctx.textAlign = "center";
-                    ctx.fillText(dispText, ox+ax, oy+ay);
-                }
-            }
-        }catch(e){}
+    old_drawLine : function(ctx,Array,alpha)
+    {
+        let lineWidth = 15 * this.scale,
+        tmp_x, tmp_y, i = 0;
+
+        ctx.beginPath();
+        Array.forEach(element => {
+            tmp_x = (element.x * this.scale) + this.gridx
+            tmp_y = (element.y * this.scale) + this.gridy
+            ctx[i ? 'lineTo': 'moveTo'](tmp_x, tmp_y);
+            i += 1;
+        });
+        ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
     },
     setScale : function(scale){
         this.scale = scale;

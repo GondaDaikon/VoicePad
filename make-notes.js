@@ -1,24 +1,22 @@
-function makeNotes(x, y, rightTapTime, isVisible)
+function makeNotes(x, y, isDisp)
 {
     notes = {};
     notes.x = x;
     notes.y = y;
     notes.gridx = 400;
     notes.gridy = 80;
-    notes.rightTapTime = rightTapTime;
-    notes.isVisible = isVisible;
 
     notes.isSet= true;
-    notes.isDone = false;
+    notes.isDone = !isDisp ? true : false;
     notes.isNext = false;
     notes.only1time = true;
-    notes.Notes_radius = 20;
+    notes.Notes_radius = 38;
     notes.scale = 1.0;
     notes.tapTime = 0;
 
     notes.draw = function(ctx,Alpha)
     {
-        if(!this.isVisible || this.isDone){
+        if(this.isDone){
             this.isSet = false;
         }
         if(this.isSet){
@@ -36,10 +34,6 @@ function makeNotes(x, y, rightTapTime, isVisible)
             ctx.stroke() ;
             ctx.fill() ;
         }
-    }
-    notes.update = function(progress)
-    {
-
     }
     notes.hitNotes = function(progress,state)
     {

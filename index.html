@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Voice Pad</title>
+  <script src="Spline.js"></script>
   <script src="data.js"></script>
   <script src="manage-notes.js"></script>
   <script src="make-notes.js"></script>
@@ -22,11 +23,10 @@
     <canvas id="canvas3" width="1200" height="1000"></canvas>
     <form method="post" action="example.cgi" id ="forms">
     <p>
-      <select name="Sentence" id="sentence">
-        <option value="konnichiwa">こんにちは</option>
-        <option value="ohayoo">おはよう</option>
-      </select>
-      <button type="submit" id="submit-senetence">表示</button>
+      <form name="Sentence" id="sentence">
+        <input type="text" id="textbox" value="こんにちは" size="20">
+        <button type="submit" id="submit-senetence">表示</button>
+      </form>
     </p>   
     </form>
   </div>

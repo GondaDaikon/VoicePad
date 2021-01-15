@@ -575,3 +575,88 @@ var data_arigatoo_f12 = [
 var data_empty = [
     [0,0,undefined,false]
 ];
+
+var data = 
+[
+    [110, 230, true ],
+    [160, 215, true ],
+    [90 , 170, true ],
+    [95 ,  75, true ],
+    [  0,   0, false],
+    [60 , 100, true ],
+    [95 ,  75, true ],
+    [135, 155, true ],
+    [230, 175, true ],
+];
+
+// <!DOCTYPE html>
+// <meta charset="utf-8">
+// <title>B-spline</title>
+
+// <body>
+// <canvas width="500" height="500"></canvas>
+
+// <script>
+// {
+//     class Spline {
+
+//         constructor (ps = []) {
+//             this.p = ps;
+//             this.m = ps.length;
+//             this.n = this.m - 1;
+//         }
+
+
+//     calc (t = 0) {
+//       let
+//         {min, max, abs} = Math,
+//         {p, m, n} = this,
+//         x = 0, y = 0,
+//         t0 = min (max (0, t), 1) * m - 1;
+
+//       for (let i = -2; i < m + 2; i += 1) {
+//         let
+//           t1 = abs (t0 - i),
+//           t2,
+//           j = min (max (0, i), n),
+//           cn = t1 < 1
+//             ? (t2 = 3 * t1 * t1, t1 * t2 - 2 * t2 + 4) / 6
+//             : (t1 < 2)
+//               ? (t2 = t1 - 2, t2 * t2 * t2 / -6)
+//               : 0;
+
+//         x += p[j].x * cn;
+//         y += p[j].y * cn;
+//       }
+//       return {x: x, y: y};  
+//     }
+//   }
+  
+//   this.Spline = Spline; 
+// }
+
+// //__________________________
+
+
+// {
+//   let
+//     ps =[
+//       {x:  50, y: 190},
+//       {x: 231, y: 147},
+//       {x:  63, y: 495},
+//       {x: 513, y: 129},
+//       {x: 459, y: 492}
+//     ],
+//     pointer = new Spline (ps),
+//     ctx = document.querySelector ('canvas').getContext('2d');
+
+//   ctx.beginPath ();
+//   ctx.strokeStyle = 'rgb(255,0,0)';
+//   for (let i = 0; i <= 1; i += .01) {
+//     let {x, y} = pointer.calc (i);
+//     ctx[i ? 'lineTo': 'moveTo'](x, y);
+//   }
+//   ctx.stroke ();
+// }
+
+// </script>

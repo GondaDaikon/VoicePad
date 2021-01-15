@@ -197,18 +197,21 @@ function touchToStart()
 		//Form Posted
 		sentenceForm.addEventListener("submit", event => {
 			event.preventDefault();
-			let select = document.getElementById("sentence");
-			let sentence = select.value
-			let sentence_data = "data_" + sentence;
+			let textbox = document.getElementById("textbox");
+			let sentence = textbox.value
+			console.log(sentence)
 			if(sentence != null){
+				sentence_roman = toRoman(sentence)
+				sentence_foumants = toFoumants(sentence_roman)
+				sentence_disp = Foumants2Disp(sentence_foumants)
+				console.log(sentence_roman)
+				console.log(sentence_foumants)
+				console.log(sentence_disp)
 				state.canvasStatus.isDrawing = true;
-				ManageNotes.ReadNotes(eval(sentence_data));
+				// ManageNotes.ReadNotes(eval(sentence_data));
+				ManageNotes.ReadNotes(sentence_disp);
 			}
-			console.log(sentence);
-
 		})
-
-
 		window.onresize();
 	}
 };
@@ -236,19 +239,20 @@ function update(timestamp,progress) {
         touchingTime = 0;
 	}
 	ManageNotes.setScale(scale);
-    ManageNotes.updateNotes(timestamp,state)
+	ManageNotes.updateNotes(timestamp,state)
+	// console.log(timestamp*0.001);
 }
 //描画
 function draw() {
 	tractCtx.clearRect(0, 0, canvas3.width, canvas3.height);
 	if(state.canvasStatus.isDrawing){
 		// console.log("draw");
-		ManageNotes.drawLine(tractCtx);
+		ManageNotes.drawVec(tractCtx);
 	}
-	ManageNotes.drawScore(tractCtx);
+	// ManageNotes.drawScore(tractCtx);
 	// if isTouch drawJudge()
 	if(!state.touchStatus.isTouch){
-		ManageNotes.drawJudge(tractCtx);
+		//ManageNotes.drawJudge(tractCtx);
 	}
 	//マウス軌道
 	// console.log("X: " + state.x + "  Y: " + state.y);
@@ -289,7 +293,6 @@ var resize = function (){
 			ui.setScale(scale);
 			// trajectory.setScale(scale);
 			ui.draw();
-			// trajectory.drawVec();
 		}
 		console.log("timeout...." + scale);
 	}, 200);
