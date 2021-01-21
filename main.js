@@ -232,8 +232,8 @@ function update(timestamp,progress) {
         state.y = tmpY;
     }
     if (!state.touchStatus.isTouch) {
-        //console.log(touchingTime*0.001);
-        touchingTime = 0;
+        console.log("touchingTime : " + touchingTime*0.001);
+        // touchingTime = 0;
 	}
 	ManageNotes.setScale(scale);
     ManageNotes.updateNotes(timestamp,state)
@@ -249,6 +249,11 @@ function draw() {
 	// if isTouch drawJudge()
 	if(!state.touchStatus.isTouch){
 		ManageNotes.drawJudge(tractCtx);
+		tractCtx.fillStyle = "rgba(200,245,245 ,1)";
+		tractCtx.font=( 28*scale + "px Arial");
+		tractCtx.textAlign = "center";
+		let text = touchingTime.toPrecision(3)*0.001 + "s"
+		tractCtx.fillText(text, 200, 100);
 	}
 	//マウス軌道
 	// console.log("X: " + state.x + "  Y: " + state.y);
