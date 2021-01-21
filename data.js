@@ -461,8 +461,8 @@ var data_konnichiwa = [
 var data_ohayoo = [
     [150, 240, 0    , true ],
     [225, 190, 500  , true ],
-    [110, 103, 1100 , true ],
-    [135, 200, 1600 , true ],
+    [110, 103, 1000 , true ],
+    [135, 200, 1250 , true ],
 
 ];
 var data_arigatoo = [
