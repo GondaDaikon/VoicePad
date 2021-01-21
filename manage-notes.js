@@ -129,7 +129,7 @@ var ManageNotes =
         let actualTapsRatio = this.ratio(actualTaps);
         let euclidDist = this.euclideanDistance(rightTapsRatio,actualTapsRatio);
         this.insertJudge(rightTapsRatio,actualTapsRatio);
-        this.score = Math.ceil((1 - euclidDist)*100);
+        // this.score = Math.ceil((1 - euclidDist)*100);
     },
     //insert socket[n][2] = Judge
     insertJudge : function(x,y)
@@ -253,7 +253,12 @@ var ManageNotes =
     drawJudge : function(ctx){
         try{
             if(this.socket[0][2] != undefined){
-                for(let i=0; i < this.socket.length; i++)
+                let socket_length = this.socket.length,
+                    score_parfect = Math.ceil(100/socket_length),
+                    score_good = Math.ceil(70/socket_length),
+                    score_bad = Math.ceil(40/socket_length),
+                    score_mas = Math.ceil(0);
+                for(let i=0; i < socket_length; i++)
                 {
                     //console.log("Judge");
                     let ox = (this.socket[i][0] * this.scale) + this.gridx;
@@ -265,10 +270,13 @@ var ManageNotes =
                     let dispText;
                     if(this.socket[i][2] < 0.1){
                         dispText = "PERFECT";
+                        score_mas += score_parfect;
                     }else if(this.socket[i][3] < 0.5){
                         dispText = " GOOD ";
+                        score_mas += score_good;
                     }else{
                         dispText = "  BAD  ";
+                        score_mas += score_bad;
                     }
 
                     ctx.fillStyle = "rgba(38,50,56 ,1)";
@@ -276,6 +284,8 @@ var ManageNotes =
                     ctx.textAlign = "center";
                     ctx.fillText(dispText, ox+ax, oy+ay);
                 }
+                score_mas = (score_mas>100 ? 100 : score_mas);
+                this.score = score_mas;
             }
         }catch(e){}
     },

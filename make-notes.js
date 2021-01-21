@@ -12,7 +12,7 @@ function makeNotes(x, y, rightTapTime, isVisible)
     notes.isDone = false;
     notes.isNext = false;
     notes.only1time = true;
-    notes.Notes_radius = 20;
+    notes.Notes_radius = 18;
     notes.scale = 1.0;
     notes.tapTime = 0;
 
