@@ -13,6 +13,7 @@ var ManageNotes =
     isEndnotes : true,
     isFirstnotes : true,
     isSeted : false,
+    tapendTime: 0,
     score : 0,
     scale : 2.0,
     gridx : 400,
@@ -93,6 +94,7 @@ var ManageNotes =
             //Notes End Taped+
             if(this.notesArray[this.notesArray.length-1].isDone && this.isEndnotes){
                 console.log("EndNotesTaped")
+                this.tapendTime = progress;
                 this.isEndnotes = false;
                 this.calcuScore(this.notesArray);
                 this.ReadNotes(this.loaddata);
