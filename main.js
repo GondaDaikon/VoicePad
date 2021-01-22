@@ -249,11 +249,12 @@ function draw() {
 	// if isTouch drawJudge()
 	if(!state.touchStatus.isTouch){
 		ManageNotes.drawJudge(tractCtx);
-		tractCtx.fillStyle = "rgba(200,245,245 ,1)";
-		tractCtx.font=( 28*scale + "px Arial");
+		tractCtx.fillStyle = "rgba(240,245,245 ,0.5)";
+		tractCtx.font=( 15*scale + "px Arial");
 		tractCtx.textAlign = "center";
-		let text = touchingTime.toPrecision(3)*0.001 + "s"
-		tractCtx.fillText(text, 200, 100);
+		let touchingTime_s = touchingTime.toFixed(3)*0.001;
+		let text = touchingTime_s.toFixed(2) + ""
+		tractCtx.fillText(text, 24*scale, 18*scale);
 	}
 	//マウス軌道
 	// console.log("X: " + state.x + "  Y: " + state.y);
