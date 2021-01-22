@@ -232,7 +232,9 @@ function update(timestamp,progress) {
         state.y = tmpY;
     }
     if (!state.touchStatus.isTouch) {
-        console.log("touchingTime : " + touchingTime*0.001);
+		console.log("touchingTime : " + touchingTime*0.001);
+		state.x = 0;
+        state.y = 0;
         // touchingTime = 0;
 	}
 	ManageNotes.setScale(scale);
@@ -249,7 +251,7 @@ function draw() {
 	// if isTouch drawJudge()
 	if(!state.touchStatus.isTouch){
 		ManageNotes.drawJudge(tractCtx);
-		tractCtx.fillStyle = "rgba(240,245,245 ,0.5)";
+		tractCtx.fillStyle = "rgba(238,245,245 ,1)";
 		tractCtx.font=( 15*scale + "px Arial");
 		tractCtx.textAlign = "center";
 		let touchingTime_s = touchingTime.toFixed(3)*0.001;
