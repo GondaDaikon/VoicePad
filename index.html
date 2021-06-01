@@ -23,10 +23,16 @@
     <canvas id="canvas3" width="1200" height="1000"></canvas>
     <form method="post" action="example.cgi" id ="forms">
     <p>
-      <form name="Sentence" id="sentence">
-        <input type="text" id="textbox" value="こんにちは" size="20">
-        <button type="submit" id="submit-senetence">表示</button>
-      </form>
+      <div class="info_btn">
+        <input value=0 id="check_btn" type="checkbox">
+        <label for="check_btn">？</label>
+      </div>
+      <div class="sentence_form">
+        <form name="Sentence" id="sentence">
+          <input type="text" id="textbox" value="こんにちは" size="20">
+          <button type="submit" id="submit-senetence"> 表 示 </button>
+          </form>
+      </div>
     </p>   
     </form>
   </div>
