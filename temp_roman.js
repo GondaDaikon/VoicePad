@@ -5,7 +5,7 @@ var toRoman = (function( ) {
       '１':'1', '２':'2', '３':'3', '４':'4', '５':'5', '６':'6', '７':'7', '８':'8', '９':'9', '０':'0',
       '！':'!', '”':'"', '＃':'#', '＄':'$', '％':'%', '＆':'&', '’':"'", '（':'(', '）':')', '＝':'=',
       '〜':'~', '｜':'|', '＠':'@', '‘':'`', '＋':'+', '＊':'*', '；':";", '：':':', '＜':'<', '＞':'>',
-      '、':',', '。':'.', '／':'/', '？':'?', '＿':'_', '・':'･', '「':'[', '」':']', '｛':'{', '｝':'}',
+      '、':',', '，':',', '。':'.', '／':'/', '？':'?', '＿':'_', '・':'･', '「':'[', '」':']', '｛':'{', '｝':'}',
       '￥':'\\', '＾':'^',
 
       'ａ':'a','ｂ':'b','ｃ':'c','ｄ':'d','ｅ':'e','ｆ':'f','ｇ':'g',
@@ -158,20 +158,27 @@ var toFoumants = (function(){
 
 var Foumants2Disp = (function(){
   return function(vec){
-    let tmpX, tmpY, array = [], isFirst = true;
+    let tmpX, tmpY, array = [], isFirst = true, islastDisp = true;
     vec.forEach(foumant => {
       let f1 = foumant[0],  f2 = foumant[1], bool;
-      tmpX = Math.round(f1 / 1000 * 300);
-      tmpY = Math.round(300 - f2 / 3000 * 300);
-      if (f1 == 0 && f2 == 0){
+      let random = Math.floor( Math.random() * (10 + 10) - 10);
+      tmpX = Math.round(f1 / 1000 * 300) + random;
+      tmpY = Math.round(300 - f2 / 3000 * 300) + random;
+      if (f1 == 0 && f2 == 0 && islastDisp){
         bool = false;
         let disp = [0, 0, bool];
-        if (!isFirst) array.push(disp);
+        if (!isFirst){
+          islastDisp = false
+          array.push(disp);
+        } ;
       }else {
         bool = true;
+        islastDisp = true
         let disp = [tmpX, tmpY, bool];
         array.push(disp);
       }
+      console.log(f1)
+      console.log(islastDisp)
       isFirst = false;
     });
     return array;

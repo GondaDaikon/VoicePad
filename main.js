@@ -289,28 +289,28 @@ function draw() {
 		// 子音ボタン　説明
 		let anchor_X,anchor_Y;
 		anchor_X = 100, anchor_Y = 160;
-		tractCtx.fillStyle = "rgba(196,254,255)"
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
 		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,160*scale,37*scale);
 		tractCtx.fillStyle = "rgba(0,0,0)"
 		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
 		tractCtx.fillText("子音ボタン：",anchor_X*scale,anchor_Y*scale)
 		// 押しながらなぞると音が出る
 		anchor_X = 30, anchor_Y = 195;
-		tractCtx.fillStyle = "rgba(196,254,255)"
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
 		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,325*scale,37*scale);
 		tractCtx.fillStyle = "rgba(0,0,0)"
 		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
 		tractCtx.fillText("押しながらなぞると音が出る",anchor_X*scale,anchor_Y*scale)
 		// 子音ボタン　押してるあいだ音が出る
 		anchor_X = 40, anchor_Y = 385;
-		tractCtx.fillStyle = "rgba(196,254,255)"
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
 		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,425*scale,37*scale);
 		tractCtx.fillStyle = "rgba(0,0,0)"
 		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
 		tractCtx.fillText("子音ボタン：押してるあいだ音が出る",anchor_X*scale,anchor_Y*scale)
 		// 母音パッド　説明
 		anchor_X = 380, anchor_Y = 240;
-		tractCtx.fillStyle = "rgba(196,254,255)"
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
 		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,350*scale,37*scale);
 		tractCtx.fillStyle = "rgba(0,0,0)"
 		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;

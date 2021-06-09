@@ -68,7 +68,7 @@ canvas{
   box-shadow: 0 5px 5px rgba(0, 0, 0, .4);
 }
 .info_btn input:checked + label {
-  background: rgba(196, 254, 255, .5);
+  background: rgba(225, 254, 255);
   -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, .0);
   box-shadow: 0 5px 5px rgba(0, 0, 0, .0);
 }
