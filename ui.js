@@ -94,7 +94,7 @@ class UI {
 	{
 		this.buttons = [];
 
-		this.ox = 400 * this.scale;
+		this.ox = 80 * this.scale;
 		this.oy = 80 * this.scale;
 		this.gridx = 60 * this.scale;
 		this.gridy = 50 * this.scale;
@@ -208,16 +208,16 @@ class UI {
 		this.context.fill();
 
 
-		this.addButton(  30, 40, "p");
-		this.addButton( 100, 40, "t");
-		this.addButton( 230, 40, "k");
+		// this.addButton(  30, 40, "p");
+		// this.addButton( 100, 40, "t");
+		// this.addButton( 230, 40, "k");
 
-		this.addButton( 100, 140, "ts");
-		this.addButton( 170, 140, "cy");
+		// this.addButton( 100, 140, "ts");
+		// this.addButton( 170, 140, "cy");
 
-		this.addButton( 100, 240, "s");
-		this.addButton( 170, 240, "sy");
-		this.addButton( 280, 240, "h");
+		// this.addButton( 100, 240, "s");
+		// this.addButton( 170, 240, "sy");
+		// this.addButton( 280, 240, "h");
 
 	}
 
