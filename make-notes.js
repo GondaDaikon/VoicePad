@@ -3,7 +3,7 @@ function makeNotes(x, y, isDisp)
     notes = {};
     notes.x = x;
     notes.y = y;
-    notes.gridx = 400;
+    notes.gridx = 80;
     notes.gridy = 80;
 
     notes.isSet= true;
@@ -64,7 +64,7 @@ function makeNotes(x, y, isDisp)
     notes.setScale = function(scale)
     {
         this.scale = scale;
-        this.gridx = 400 * scale;
+        this.gridx = 80 * scale;
         this.gridy = 80 * scale;
     }
     return notes;

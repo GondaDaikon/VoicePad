@@ -4,6 +4,7 @@ class UI {
 	{
 		this.scale = 1.5;
 
+		this.canvas = element;
 		this.element = element;
 		this.context = element.getContext('2d');
 
@@ -94,10 +95,21 @@ class UI {
 	{
 		this.buttons = [];
 
-		this.ox = 80 * this.scale;
-		this.oy = 80 * this.scale;
-		this.gridx = 60 * this.scale;
-		this.gridy = 50 * this.scale;
+		let gridStartX, gridStartY, maxLength;
+		maxLength = Math.min(this.canvas.width, this.canvas.height)
+		gridStartX = this.canvas.width/2 - (this.gridx*2.1*scale);
+		gridStartY = this.canvas.height/2 -(this.gridx*3*scale) - (30*scale);
+		console.log("canvas3 X: " + gridStartX + "  canvas3 Y: " + gridStartY + " Max: " +maxLength);
+
+		let grid_width, grid_height, adjustScale;
+		adjustScale = 1.8
+		grid_width  = 60 * adjustScale;
+		grid_height = 50 * adjustScale;
+
+		this.ox = gridStartX * this.scale;
+		this.oy = gridStartY * this.scale;
+		this.gridx = grid_width * this.scale;
+		this.gridy = grid_height * this.scale;
 
 		this.x0 = this.gridx * 0;
 		this.x1 = this.gridx * 1;
@@ -160,28 +172,28 @@ class UI {
 		this.context.fillText("u",  71 * this.scale + this.ox,  184 * this.scale + this.oy);
 		this.context.fillText("e", 160 * this.scale + this.ox,  113 * this.scale + this.oy);
 		this.context.fillText("o", 160 * this.scale + this.ox,  224 * this.scale + this.oy);
-		this.context.fillText("F1 [Hz]", 125 * this.scale + this.ox,  350 * this.scale + this.oy);
+		this.context.fillText("F1 [Hz]", grid_width * 2 * this.scale + this.ox,  grid_height * 7 * this.scale + this.oy);
 		this.context.save();
 		this.context.rotate(-Math.PI / 2);
-		this.context.fillText("F2 [Hz]", -165 * this.scale - this.oy,  -40 * this.scale + this.ox);
+		this.context.fillText("F2 [Hz]", - grid_width * 2.7 * this.scale - this.oy,  -grid_height * 1 * this.scale + this.ox);
 		this.context.restore();
 
 		// X軸
-		this.context.fillText(   "0",  -4 * this.scale + this.ox, 320 * this.scale + this.oy);
-		this.context.fillText( "200",  48 * this.scale + this.ox, 320 * this.scale + this.oy);
-		this.context.fillText( "400", 108 * this.scale + this.ox, 320 * this.scale + this.oy);
-		this.context.fillText( "600", 168 * this.scale + this.ox, 320 * this.scale + this.oy);
-		this.context.fillText( "800", 228 * this.scale + this.ox, 320 * this.scale + this.oy);
-		this.context.fillText("1000", 284 * this.scale + this.ox, 320 * this.scale + this.oy);
+		this.context.fillText(   "0",-grid_width * .05  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText( "200", grid_width * .85  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText( "400", grid_width * 1.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText( "600", grid_width * 2.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText( "800", grid_width * 3.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText("1000", grid_width * 4.8  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
 
 		// Y軸
-		this.context.fillText("3000", -30 * this.scale + this.ox,   6 * this.scale + this.oy);
-		this.context.fillText("2500", -30 * this.scale + this.ox,  56 * this.scale + this.oy);
-		this.context.fillText("2000", -30 * this.scale + this.ox, 106 * this.scale + this.oy);
-		this.context.fillText("1500", -30 * this.scale + this.ox, 156 * this.scale + this.oy);
-		this.context.fillText("1000", -30 * this.scale + this.ox, 206 * this.scale + this.oy);
-		this.context.fillText( "500", -23 * this.scale + this.ox, 256 * this.scale + this.oy);
-		this.context.fillText(   "0", -17 * this.scale + this.ox, 306 * this.scale + this.oy);
+		this.context.fillText("3000",-grid_width * .5 * this.scale + this.ox, grid_height * .1   * this.scale + this.oy);
+		this.context.fillText("2500",-grid_width * .5 * this.scale + this.ox, grid_height * 1.05 * this.scale + this.oy);
+		this.context.fillText("2000",-grid_width * .5 * this.scale + this.ox, grid_height * 2.05 * this.scale + this.oy);
+		this.context.fillText("1500",-grid_width * .5 * this.scale + this.ox, grid_height * 3.05 * this.scale + this.oy);
+		this.context.fillText("1000",-grid_width * .5 * this.scale + this.ox, grid_height * 4.05 * this.scale + this.oy);
+		this.context.fillText( "500",-grid_width * .5 * this.scale + this.ox, grid_height * 5.05 * this.scale + this.oy);
+		this.context.fillText(   "0",-grid_width * .5 * this.scale + this.ox, grid_height * 6.1  * this.scale + this.oy);
 
 		// 母音
 		this.context.fillStyle = 'rgb(20, 20, 255)';

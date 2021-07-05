@@ -14,7 +14,7 @@ var ManageNotes =
     isSeted : false,
     score : 0,
     scale : 2.0,
-    gridx : 400,
+    gridx : 80,
     gridy : 80,
 
     ReadNotes : function(data)
@@ -205,7 +205,7 @@ var ManageNotes =
     },
     setScale : function(scale){
         this.scale = scale;
-        this.gridx = 400 * scale;
+        this.gridx = 80 * scale;
         this.gridy = 80 * scale;
         for(let i = 0; i < this.notesArray.length; i++){
             this.notesArray[i].setScale(scale);
