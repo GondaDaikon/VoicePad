@@ -93,44 +93,30 @@ class UI {
 
 	draw()
 	{
-		this.buttons = [];
+		this.ox = global_gridX;
+		this.oy = global_gridY;
 
-		let gridStartX, gridStartY, maxLength;
-		maxLength = Math.min(this.canvas.width, this.canvas.height)
-		gridStartX = this.canvas.width/2 - (this.gridx*2.1*scale);
-		gridStartY = this.canvas.height/2 -(this.gridx*3*scale) - (30*scale);
-		console.log("canvas3 X: " + gridStartX + "  canvas3 Y: " + gridStartY + " Max: " +maxLength);
-
-		let grid_width, grid_height, adjustScale;
-		adjustScale = 1.8
-		grid_width  = 60 * adjustScale;
-		grid_height = 50 * adjustScale;
-
-		this.ox = gridStartX * this.scale;
-		this.oy = gridStartY * this.scale;
-		this.gridx = grid_width * this.scale;
-		this.gridy = grid_height * this.scale;
-
-		this.x0 = this.gridx * 0;
-		this.x1 = this.gridx * 1;
-		this.x2 = this.gridx * 2;
-		this.x3 = this.gridx * 3;
-		this.x4 = this.gridx * 4;
-		this.x5 = this.gridx * 5;
+		this.x0 = grid_width * 0;
+		this.x1 = grid_width * 1;
+		this.x2 = grid_width * 2;
+		this.x3 = grid_width * 3;
+		this.x4 = grid_width * 4;
+		this.x5 = grid_width * 5;
 		this.xlen = this.x5 - this.x0;
 
-		this.y0 = this.gridy * 0;
-		this.y1 = this.gridy * 1;
-		this.y2 = this.gridy * 2;
-		this.y3 = this.gridy * 3;
-		this.y4 = this.gridy * 4;
-		this.y5 = this.gridy * 5;
-		this.y6 = this.gridy * 6;
+		this.y0 = grid_height * 0;
+		this.y1 = grid_height * 1;
+		this.y2 = grid_height * 2;
+		this.y3 = grid_height * 3;
+		this.y4 = grid_height * 4;
+		this.y5 = grid_height * 5;
+		this.y6 = grid_height * 6;
 		this.ylen = this.y6 - this.y0;
 
 		this.context.clearRect(0, 0, this.element.width, this.element.height);
 
 		// 縦軸
+		this.context.fillStyle = "rgba(0, 0, 0)"
 		this.context.beginPath();
 		this.context.moveTo(this.x0 + this.ox, this.y0 + this.oy);
 		this.context.lineTo(this.x0 + this.ox, this.y6 + this.oy);
@@ -165,58 +151,58 @@ class UI {
 		this.context.stroke();
 
 		// ラベル
-		var fontsize = String(Math.floor(14 * this.scale));
+		var fontsize = String(Math.floor(26 * this.scale));
 		this.context.font = fontsize + "px 'Times New Roman'";
-		this.context.fillText("a", 250 * this.scale + this.ox,  184 * this.scale + this.oy);
-		this.context.fillText("i",  75 * this.scale + this.ox,   73 * this.scale + this.oy);
-		this.context.fillText("u",  71 * this.scale + this.ox,  184 * this.scale + this.oy);
-		this.context.fillText("e", 160 * this.scale + this.ox,  113 * this.scale + this.oy);
-		this.context.fillText("o", 160 * this.scale + this.ox,  224 * this.scale + this.oy);
-		this.context.fillText("F1 [Hz]", grid_width * 2 * this.scale + this.ox,  grid_height * 7 * this.scale + this.oy);
+		this.context.fillText("a", grid_width * 4.1 + this.ox, grid_height * 3.6 + this.oy);
+		this.context.fillText("i", grid_width * 1.3 + this.ox, grid_height * 1.4 + this.oy);
+		this.context.fillText("u", grid_width * 1.3 + this.ox, grid_height * 3.65+ this.oy);
+		this.context.fillText("e", grid_width * 2.6 + this.ox, grid_height * 2.2 + this.oy);
+		this.context.fillText("o", grid_width * 2.6 + this.ox, grid_height * 4.4 + this.oy);
+		this.context.fillText("F1 [Hz]", grid_width * 2+ this.ox,  grid_height * 7+ this.oy);
 		this.context.save();
 		this.context.rotate(-Math.PI / 2);
-		this.context.fillText("F2 [Hz]", - grid_width * 2.7 * this.scale - this.oy,  -grid_height * 1 * this.scale + this.ox);
+		this.context.fillText("F2 [Hz]", - grid_width * 2.8 - this.oy,  -grid_height * 1 + this.ox);
 		this.context.restore();
 
 		// X軸
-		this.context.fillText(   "0",-grid_width * .05  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
-		this.context.fillText( "200", grid_width * .85  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
-		this.context.fillText( "400", grid_width * 1.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
-		this.context.fillText( "600", grid_width * 2.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
-		this.context.fillText( "800", grid_width * 3.85 * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
-		this.context.fillText("1000", grid_width * 4.8  * this.scale + this.ox, grid_height * 6.6 * this.scale + this.oy);
+		this.context.fillText(   "0",-grid_width * .05  + this.ox, grid_height * 6.6 + this.oy);
+		this.context.fillText( "200", grid_width * .85  + this.ox, grid_height * 6.6 + this.oy);
+		this.context.fillText( "400", grid_width * 1.85 + this.ox, grid_height * 6.6 + this.oy);
+		this.context.fillText( "600", grid_width * 2.85 + this.ox, grid_height * 6.6 + this.oy);
+		this.context.fillText( "800", grid_width * 3.85 + this.ox, grid_height * 6.6 + this.oy);
+		this.context.fillText("1000", grid_width * 4.8  + this.ox, grid_height * 6.6 + this.oy);
 
 		// Y軸
-		this.context.fillText("3000",-grid_width * .5 * this.scale + this.ox, grid_height * .1   * this.scale + this.oy);
-		this.context.fillText("2500",-grid_width * .5 * this.scale + this.ox, grid_height * 1.05 * this.scale + this.oy);
-		this.context.fillText("2000",-grid_width * .5 * this.scale + this.ox, grid_height * 2.05 * this.scale + this.oy);
-		this.context.fillText("1500",-grid_width * .5 * this.scale + this.ox, grid_height * 3.05 * this.scale + this.oy);
-		this.context.fillText("1000",-grid_width * .5 * this.scale + this.ox, grid_height * 4.05 * this.scale + this.oy);
-		this.context.fillText( "500",-grid_width * .5 * this.scale + this.ox, grid_height * 5.05 * this.scale + this.oy);
-		this.context.fillText(   "0",-grid_width * .5 * this.scale + this.ox, grid_height * 6.1  * this.scale + this.oy);
+		this.context.fillText("3000",-grid_width * .6 + this.ox, grid_height * .1   + this.oy);
+		this.context.fillText("2500",-grid_width * .6 + this.ox, grid_height * 1.05 + this.oy);
+		this.context.fillText("2000",-grid_width * .6 + this.ox, grid_height * 2.05 + this.oy);
+		this.context.fillText("1500",-grid_width * .6 + this.ox, grid_height * 3.05 + this.oy);
+		this.context.fillText("1000",-grid_width * .6 + this.ox, grid_height * 4.05 + this.oy);
+		this.context.fillText( "500",-grid_width * .6 + this.ox, grid_height * 5.05 + this.oy);
+		this.context.fillText(   "0",-grid_width * .6 + this.ox, grid_height * 6.1  + this.oy);
 
 		// 母音
 		this.context.fillStyle = 'rgb(20, 20, 255)';
 		this.context.beginPath();
-		var size = 4 * this.scale;
+		var size = 5 * this.scale;
 		//a
-		this.context.arc((800 / 1000 * 300) * this.scale + this.ox, (300 - 1200 / 3000 * 300) * this.scale + this.oy, size, 0, 2 * Math.PI);
+		this.context.arc(grid_width * 4.0 + this.ox, grid_height * 3.6 + this.oy, size, 0, 2 * Math.PI);
 		this.context.fill();
 		this.context.beginPath();
 		//e
-		this.context.arc((500 / 1000 * 300) * this.scale + this.ox, (300 - 1900 / 3000 * 300) * this.scale + this.oy, size, 0, 2 * Math.PI);
+		this.context.arc(grid_width * 2.5 + this.ox, grid_height * 2.2 + this.oy, size, 0, 2 * Math.PI);
 		this.context.fill();
 		this.context.beginPath();
 		//i
-		this.context.arc((300 / 1000 * 300) * this.scale + this.ox, (300 - 2300 / 3000 * 300) * this.scale + this.oy, size, 0, 2 * Math.PI);
+		this.context.arc(grid_width * 1.5 + this.ox, grid_height * 1.4 + this.oy, size, 0, 2 * Math.PI);
 		this.context.fill();
 		this.context.beginPath();
 		//u
-		this.context.arc((300 / 1000 * 300) * this.scale + this.ox, (300 - 1200 / 3000 * 300) * this.scale + this.oy, size, 0, 2 * Math.PI);
+		this.context.arc(grid_width * 1.5 + this.ox, grid_height * 3.65+ this.oy, size, 0, 2 * Math.PI);
 		this.context.fill();
 		this.context.beginPath();
 		//o
-		this.context.arc((500 / 1000 * 300) * this.scale + this.ox, (300 -  800 / 3000 * 300) * this.scale + this.oy, size, 0, 2 * Math.PI);
+		this.context.arc(grid_width * 2.5 + this.ox, grid_height * 4.4 + this.oy, size, 0, 2 * Math.PI);
 		this.context.fill();
 
 

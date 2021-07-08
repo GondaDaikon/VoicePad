@@ -3,14 +3,12 @@ function makeNotes(x, y, isDisp)
     notes = {};
     notes.x = x;
     notes.y = y;
-    notes.gridx = 80;
-    notes.gridy = 80;
 
     notes.isSet= true;
     notes.isDone = !isDisp ? true : false;
     notes.isNext = false;
     notes.only1time = true;
-    notes.Notes_radius = 34;
+    notes.Notes_radius = 40;
     notes.scale = 1.0;
     notes.tapTime = 0;
 
@@ -21,8 +19,8 @@ function makeNotes(x, y, isDisp)
         }
         if(this.isSet){
             //Notes
-            let x = (this.x * this.scale) + this.gridx;
-            let y = (this.y * this.scale) + this.gridy;
+            let x = (this.x * this.scale) + global_gridX;
+            let y = (this.y * this.scale) + global_gridY;
             let Notes_radius = this.Notes_radius * this.scale;
 
             ctx.strokeStyle = "rgba(224,224,224," + Alpha + ")" ;
@@ -37,8 +35,8 @@ function makeNotes(x, y, isDisp)
     }
     notes.hitNotes = function(progress,state)
     {
-        let x = (this.x * this.scale) + this.gridx;
-        let y = (this.y * this.scale) + this.gridy;
+        let x = (this.x * this.scale) + global_gridX;
+        let y = (this.y * this.scale) + global_gridY;
         let Notes_radius = this.Notes_radius * this.scale;
 
         if(this.only1time){
@@ -64,8 +62,6 @@ function makeNotes(x, y, isDisp)
     notes.setScale = function(scale)
     {
         this.scale = scale;
-        this.gridx = 80 * scale;
-        this.gridy = 80 * scale;
     }
     return notes;
 }

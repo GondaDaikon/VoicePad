@@ -15,6 +15,8 @@ var tmpX;
 var tmpY;
 var touchingTime = 0;
 var tractCtx;
+var grid_width, grid_height;
+var global_gridX, global_gridY;
 
 class App {
 	setEvent(elem)
@@ -147,7 +149,6 @@ function touchToStart()
 		init = true;
 
 		window.onresize = resize;
-        resize() ;
 
 		document.getElementById('init').style.display = 'none';
 		document.getElementById("forms").style.visibility = "visible"
@@ -164,6 +165,7 @@ function touchToStart()
 		var scaleX = window.innerWidth / 800;
 		var scaleY = window.innerHeight / 500;
 		var scale = Math.min(scaleX, scaleY);
+		resize();
 
 		ui = new UI(canvas1);
 		ui.setScale(scale);
@@ -329,6 +331,20 @@ var resize = function (){
 		var scaleX = window.innerWidth / 800;
 		var scaleY = window.innerHeight / 500;
 		scale = Math.min(scaleX, scaleY);
+		
+		let adjustScale;
+		adjustScale = 1.8
+		grid_width  = 60 * adjustScale * scale;
+		grid_height = 50 * adjustScale * scale;
+
+		let gridStartX, gridStartY, maxLength;
+		maxLength = Math.min(canvas1.width, canvas1.height)
+		gridStartX = canvas1.width/2 - (grid_width* 2.1 *scale);
+		gridStartY = canvas1.height/2 -(grid_height* 1.1  *scale);
+		// console.log("canvas3 X: " + gridStartX + "  canvas3 Y: " + gridStartY + " Max: " +maxLength);
+
+		global_gridX = gridStartX * scale;
+		global_gridY = gridStartY * scale;
 
 		canvas1.setAttribute("width", window.innerWidth.toString());
 		canvas1.setAttribute("height", window.innerHeight.toString());

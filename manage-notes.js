@@ -14,8 +14,6 @@ var ManageNotes =
     isSeted : false,
     score : 0,
     scale : 2.0,
-    gridx : 80,
-    gridy : 80,
 
     ReadNotes : function(data)
     {
@@ -127,8 +125,8 @@ var ManageNotes =
         let ps = [];
         Array.forEach((element) => {
             let tmp = {};
-            tmp.x = (element.x * this.scale) + this.gridx
-            tmp.y = (element.y * this.scale) + this.gridy
+            tmp.x = (element.x * this.scale) + global_gridX;
+            tmp.y = (element.y * this.scale) + global_gridY;
             ps.push(tmp)
             // element.draw(ctx,alpha)
         })
@@ -192,8 +190,8 @@ var ManageNotes =
 
         ctx.beginPath();
         Array.forEach(element => {
-            tmp_x = (element.x * this.scale) + this.gridx
-            tmp_y = (element.y * this.scale) + this.gridy
+            tmp_x = (element.x * this.scale) + global_gridX;
+            tmp_y = (element.y * this.scale) + global_gridY;
             ctx[i ? 'lineTo': 'moveTo'](tmp_x, tmp_y);
             i += 1;
         });
@@ -205,8 +203,6 @@ var ManageNotes =
     },
     setScale : function(scale){
         this.scale = scale;
-        this.gridx = 80 * scale;
-        this.gridy = 80 * scale;
         for(let i = 0; i < this.notesArray.length; i++){
             this.notesArray[i].setScale(scale);
         }
