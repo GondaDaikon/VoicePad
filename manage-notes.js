@@ -97,7 +97,7 @@ var ManageNotes =
             let alpha;
             // 現在のライン
             if( i == this.now_line){
-                alpha = 0.9;
+                alpha = 0.99;
             }
             // 次以降のライン
             if( i > this.now_line){
@@ -120,7 +120,7 @@ var ManageNotes =
     },
     drawLine : function(ctx,Array,alpha)
     {
-        let lineWidth = 8 * this.scale;
+        let lineWidth = 14 * this.scale;
 
         let ps = [];
         Array.forEach((element) => {

@@ -76,18 +76,18 @@ canvas{
 .sentence_form{
   display:inline-block;
   text-align: center;
-  top: 40px;
+  top: 200px;
 }
 .sentence_form button{
   display:inline-block;
-  margin: 10px;
+  margin: 20px;
   cursor: pointer;
   color: #FFF;
-  font-size: 100%;
+  font-size: 200%;
   font-weight:bold;
   text-shadow:0 -1px rgba(43, 129, 168, 0.9);
-  width: 60px;
-  height: 30px;
+  width: 100px;
+  height: 70px;
   background-color: rgba(41,182,246,.9);
   border-radius: 10%;
   border-style: hidden;
@@ -103,7 +103,9 @@ canvas{
   padding: 6px 15px;
   border-radius: 3px;
   color: rgb(131, 131, 131);
-  font-size: 16px;
+  width: 500px;
+  height: 70px;
+  font-size: 50px;
 }
 .sentence_form input:focus{
   box-shadow: 0 0 5px 0 rgba(41, 182, 246, .9);
