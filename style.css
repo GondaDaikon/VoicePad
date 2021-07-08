@@ -103,6 +103,7 @@ canvas{
   padding: 6px 15px;
   border-radius: 3px;
   color: rgb(131, 131, 131);
+  font-size: 16px;
 }
 .sentence_form input:focus{
   box-shadow: 0 0 5px 0 rgba(41, 182, 246, .9);
