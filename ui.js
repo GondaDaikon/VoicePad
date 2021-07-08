@@ -151,7 +151,7 @@ class UI {
 		this.context.stroke();
 
 		// ラベル
-		var fontsize = String(Math.floor(30 * this.scale));
+		var fontsize = String(Math.floor(27 * this.scale));
 		this.context.font = fontsize + "px 'Times New Roman'";
 		this.context.fillText("a", grid_width * 4.1 + this.ox, grid_height * 3.6 + this.oy);
 		this.context.fillText("i", grid_width * 1.3 + this.ox, grid_height * 1.4 + this.oy);
