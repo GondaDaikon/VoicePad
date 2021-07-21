@@ -43,6 +43,7 @@ canvas{
 	text-align: center;
 }
 .info_btn {
+  visibility: hidden;
   display:inline-block;
   position: fixed;
   top: 10px;

@@ -168,7 +168,7 @@ var Foumants2Disp = (function(){
         bool = false;
         let disp = [0, 0, bool];
         if (!isFirst){
-          islastDisp = false
+          islastDisp = false;
           array.push(disp);
         } ;
       }else {
