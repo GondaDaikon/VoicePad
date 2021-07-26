@@ -162,8 +162,8 @@ var Foumants2Disp = (function(){
     vec.forEach(foumant => {
       let f1 = foumant[0],  f2 = foumant[1], bool;
       let random = Math.floor( Math.random() * (10 + 10) - 10);
-      tmpX = Math.round(f1 / 1000 * grid_width * 4);
-      tmpY = Math.round((grid_height * 5) - (f2/3000*grid_height * 5));
+      tmpX = Math.round((f1/1000) * grid_width*5 + global_gridX);
+      tmpY = Math.round((grid_height * 6) - ((f2/3000)*grid_height*6)+global_gridY);
       if (f1 == 0 && f2 == 0 && islastDisp){
         bool = false;
         let disp = [0, 0, bool];

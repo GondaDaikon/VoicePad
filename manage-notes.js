@@ -101,13 +101,13 @@ var ManageNotes =
             }
             // 次以降のライン
             if( i > this.now_line){
-                alpha = 0.8;
+                alpha = 0.4;
             }
             if( i > this.now_line + 1){
-                alpha = 0.7;
+                alpha = 0.2;
             }
             if( i > this.now_line + 2){
-                alpha = 0.6;
+                alpha = 0.01;
             }
             // なぞり終えたライン
             if( i < this.now_line){
@@ -125,8 +125,8 @@ var ManageNotes =
         let ps = [];
         Array.forEach((element) => {
             let tmp = {};
-            tmp.x = (element.x * this.scale) + global_gridX;
-            tmp.y = (element.y * this.scale) + global_gridY;
+            tmp.x = element.x;
+            tmp.y = element.y;
             ps.push(tmp)
             // element.draw(ctx,alpha)
         })
