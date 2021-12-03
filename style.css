@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Myfont';
+  src: url(font\x12y16pxMaruMonica.eot) format('oldIE'),
+      url(font\x12y16pxMaruMonica.ttf) format('truetype'),
+      url(font\x12y16pxMaruMonica.woff) format('woff');
+}
 div{
   position: relative;
 }
@@ -20,11 +26,12 @@ canvas{
 }
 
 #forms {
+  visibility: hidden;
   position: relative;
   bottom: 0em;
 
   text-align: center;
-  visibility:hidden;
+  
 }
 
 #init {
@@ -33,4 +40,73 @@ canvas{
 	font-size: 25px;
 	width: 100%;
 	text-align: center;
+}
+.info_btn {
+  display:inline-block;
+  position: fixed;
+  top: 10px;
+  left: 20px;
+}
+.info_btn input {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+}
+.info_btn label {
+  display:inline-block;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 200%;
+  color: rgb(24, 24, 24);
+  font-weight: bold;
+  text-align:center;
+  line-height: 65px;
+  background: rgb(253, 253, 253);
+  -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, .4);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .4);
+}
+.info_btn input:checked + label {
+  background: rgba(225, 254, 255);
+  -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, .0);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .0);
+}
+.sentence_form{
+  display:inline-block;
+  text-align: center;
+  top: 20px;
+}
+.sentence_form button{
+  display:inline-block;
+  margin: 10px;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 100%;
+  font-weight:bold;
+  text-shadow:0 -1px rgba(43, 129, 168, 0.9);
+  width: 60px;
+  height: 30px;
+  background-color: rgba(41,182,246,.9);
+  border-radius: 10%;
+  border-style: hidden;
+
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+}
+.sentence_form button:active{
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, .0);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .0);
+}
+.sentence_form input{
+  padding: 6px 15px;
+  border-radius: 3px;
+  color: rgb(131, 131, 131);
+}
+.sentence_form input:focus{
+  box-shadow: 0 0 5px 0 rgba(41, 182, 246, .9);
+  color: rgb(0, 0, 0);
+  border: 2px solid #FFF !important;
+  outline: 0;
+  transition: all 0.2s;
 }

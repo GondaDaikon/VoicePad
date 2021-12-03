@@ -151,6 +151,7 @@ function touchToStart()
 
 		document.getElementById('init').style.display = 'none';
 		document.getElementById("forms").style.visibility = "visible"
+		document.getElementById("check_btn").style.visibility = "visible"
 
 		canvas1 = document.getElementById('canvas1');
 		canvas2 = document.getElementById('canvas2');
@@ -158,6 +159,7 @@ function touchToStart()
 		tractCtx = canvas3.getContext("2d");
 
 		sentenceForm = document.getElementById("forms");
+		isChecked = document.getElementById("check_btn")
 
 		var scaleX = window.innerWidth / 800;
 		var scaleY = window.innerHeight / 500;
@@ -265,6 +267,55 @@ function draw() {
 		tractCtx.closePath();
 		tractCtx.stroke();
 		tractCtx.fill();
+	}
+	//infomation disp
+	if(isChecked.checked){
+		let width, height;
+		width = 740, height = 450;
+		// info background
+		tractCtx.fillStyle = "rgba(196,254,255,.5)"
+		tractCtx.fillRect(20,20,width*scale,height*scale);
+		tractCtx.globalCompositeOperation = "destination-out";
+		// 子音ボタン：押しながら母音をなぞる
+		tractCtx.fillStyle = "rgba(0, 0, 0)"
+		tractCtx.fillRect(26*scale,80*scale,280*scale,85*scale);
+		tractCtx.fillRect(270*scale,80*scale,85*scale,280*scale);
+		// 子音ボタン：押してる間ノイズ音が出る
+		tractCtx.fillStyle = "rgba(0, 0, 0)"
+		tractCtx.fillRect(90*scale,180*scale,150*scale,210*scale);
+		// 母音パッド（なぞると声が出る）
+		tractCtx.fillStyle = "rgba(0, 0, 0)"
+		tractCtx.fillRect(390*scale,70*scale,320*scale,320*scale);
+		tractCtx.globalCompositeOperation = "source-over";
+		// 子音ボタン　説明
+		let anchor_X,anchor_Y;
+		anchor_X = 100, anchor_Y = 40;
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
+		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,160*scale,37*scale);
+		tractCtx.fillStyle = "rgba(0,0,0)"
+		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
+		tractCtx.fillText("子音ボタン：",anchor_X*scale,anchor_Y*scale)
+		// 押しながらなぞると音が出る
+		anchor_X = 30, anchor_Y = 75;
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
+		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,325*scale,37*scale);
+		tractCtx.fillStyle = "rgba(0,0,0)"
+		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
+		tractCtx.fillText("押しながらなぞると音が出る",anchor_X*scale,anchor_Y*scale)
+		// 子音ボタン　押してるあいだ音が出る
+		anchor_X = 20, anchor_Y = 385;
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
+		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,425*scale,37*scale);
+		tractCtx.fillStyle = "rgba(0,0,0)"
+		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
+		tractCtx.fillText("子音ボタン：押してるあいだ音が出る",anchor_X*scale,anchor_Y*scale)
+		// 母音パッド　説明
+		anchor_X = 380, anchor_Y = 240;
+		tractCtx.fillStyle = "rgba(225, 254, 255)"
+		tractCtx.fillRect((anchor_X-10)*scale,(anchor_Y-30)*scale,350*scale,37*scale);
+		tractCtx.fillStyle = "rgba(0,0,0)"
+		tractCtx.font = (32*this.scale + "px x12y16pxMaruMonica");;
+		tractCtx.fillText("母音パネル：なぞると音が出る",anchor_X*scale,anchor_Y*scale)
 	}
 }
 var timer;
