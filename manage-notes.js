@@ -122,7 +122,7 @@ var ManageNotes =
     },
     drawLine : function(ctx,Array,alpha)
     {
-        let lineWidth = 5 * this.scale;
+        let lineWidth = 7.5 * this.scale;
 
         let ps = [];
         Array.forEach((element) => {
