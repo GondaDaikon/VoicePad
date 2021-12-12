@@ -137,6 +137,7 @@ var ManageNotes =
         for (let i = 0; i <= 1; i += .01) {
             let Pos = pointer.calc (i);
             ctx[i ? 'lineTo': 'moveTo'](Pos.x, Pos.y);
+            // console.log("index: " + i + ", X: " + Pos.x + ", Y: " + Pos.y)
         }
         
         ctx.strokeStyle = "rgba(41,182,246," + alpha + ")";
